@@ -6,20 +6,33 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private float _playerMoveSpeed = 0;
   [SerializeField] private float _playerRotateSpeed = 0;
   private CharacterController _characterController;
+  private PlayerInputSystem _playerInputSystem;
   private Vector3 _playerMove;
   private float _playerRotate;
 
-  private void Start()
+  private void Awake()
   {
     gameObject.AddComponent<CharacterController>();
     _characterController = GetComponent<CharacterController>();
+
+    _playerInputSystem = new PlayerInputSystem();
+    _playerInputSystem.Enable();
+  }
+  private void OnEnable()
+  {
+    _playerInputSystem.Player.Jump.performed += PlayerJump;
+  }
+
+  private void OnDisable()
+  {
+    _playerInputSystem.Player.Jump.performed -= PlayerJump;
   }
 
   private void Update()
   {
     PlayerMove();
     PlayerRotate();
-    Debug.Log(GetInput<float>("Jump"));
+    // Debug.Log(GetInput<float>("Jump"));
   }
 
   private T GetInput<T>(string actionName) where T : struct
@@ -39,5 +52,10 @@ public class PlayerController : MonoBehaviour
   {
     _playerRotate = GetInput<Vector2>("Look").x;
     transform.Rotate(Vector3.up, _playerRotateSpeed * Time.deltaTime * _playerRotate);
+  }
+
+  private void PlayerJump(InputAction.CallbackContext obj)
+  {
+    Debug.Log("Jump emulation");
   }
 }
