@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private float _playerRotateSpeed = 0;
   private CharacterController _characterController;
   private PlayerInputSystem _playerInputSystem;
+  private InputAction _moveAction;
+  private InputAction _lookAction;
+  private InputAction _jumpAction;
   private Vector3 _playerMove;
   private float _playerRotate;
 
@@ -16,46 +19,44 @@ public class PlayerController : MonoBehaviour
     _characterController = GetComponent<CharacterController>();
 
     _playerInputSystem = new PlayerInputSystem();
-    _playerInputSystem.Enable();
+    _moveAction = _playerInputSystem.FindAction("Move");
+    _lookAction = _playerInputSystem.FindAction("Look");
+    _jumpAction = _playerInputSystem.FindAction("Jump");
   }
   private void OnEnable()
   {
-    _playerInputSystem.Player.Jump.performed += PlayerJump;
+    _playerInputSystem.Enable();
   }
 
   private void OnDisable()
   {
-    _playerInputSystem.Player.Jump.performed -= PlayerJump;
+    _playerInputSystem.Disable();
   }
 
   private void Update()
   {
     PlayerMove();
     PlayerRotate();
-    // Debug.Log(GetInput<float>("Jump"));
-  }
-
-  private T GetInput<T>(string actionName) where T : struct
-  {
-    return InputSystem.actions.FindAction(actionName).ReadValue<T>();
+    PlayerJump();
   }
 
   private void PlayerMove()
   {
-    _playerMove.x = GetInput<Vector2>("Move").x;
-    _playerMove.z = GetInput<Vector2>("Move").y;
+    _playerMove.x = _moveAction.ReadValue<Vector2>().x;
+    _playerMove.z = _moveAction.ReadValue<Vector2>().y;
     _playerMove = transform.TransformDirection(_playerMove); // Transform to local axis
     _characterController.Move(_playerMoveSpeed * Time.deltaTime * _playerMove);
   }
 
   private void PlayerRotate()
   {
-    _playerRotate = GetInput<Vector2>("Look").x;
+    _playerRotate = _lookAction.ReadValue<Vector2>().x;
     transform.Rotate(Vector3.up, _playerRotateSpeed * Time.deltaTime * _playerRotate);
   }
 
-  private void PlayerJump(InputAction.CallbackContext obj)
+  private void PlayerJump()
   {
-    Debug.Log("Jump emulation");
+    if (_jumpAction.WasPressedThisFrame())
+      Debug.Log("Jump emulation");
   }
 }

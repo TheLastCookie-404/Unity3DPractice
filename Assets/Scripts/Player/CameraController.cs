@@ -4,43 +4,42 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
   [Header("Обрезка угла наклона камеры")]
-  [SerializeField, Tooltip("Максимальный угол поворота камеры"), Range(70, 90)] private int _maxAngle;
-  [SerializeField, Tooltip("Минимальный угол поворота камеры"), Range(70, 90)] private int _minAngle;
+  [SerializeField, Tooltip("Максимальный угол поворота камеры"), Range(70, 90)] private float _maxAngle;
+  [SerializeField, Tooltip("Минимальный угол поворота камеры"), Range(70, 90)] private float _minAngle;
+  [SerializeField, Tooltip("Минимальный угол поворота камеры")] private float _camRotationSpeed;
+  private PlayerInputSystem _playerInputSystem;
+  private InputAction _lookAction;
+  private Vector2 _rotateInput;
   private float _camRotation;
-  private void Start()
-  {
 
+  private void Awake()
+  {
+    _playerInputSystem = new PlayerInputSystem();
+
+    _lookAction = _playerInputSystem.FindAction("Look");
+  }
+
+  private void OnEnable()
+  {
+    _playerInputSystem.Enable();
+  }
+
+  private void OnDisable()
+  {
+    _playerInputSystem.Disable();
   }
 
   private void Update()
   {
-    _camRotation = GetInput<Vector2>("Look").y;
-    // Debug.Log(transform.rotation.x);
-    CamRotate(_camRotation);
+    _rotateInput = _lookAction.ReadValue<Vector2>() * _camRotationSpeed * Time.deltaTime;
+    CamRotate(_rotateInput.y, _maxAngle, _minAngle);
   }
 
-  private T GetInput<T>(string actionName) where T : struct
+  private void CamRotate(float inputValue, float maxAngle, float minAngle)
   {
-    return InputSystem.actions.FindAction(actionName).ReadValue<T>();
+    _camRotation -= inputValue;
+    _camRotation = Mathf.Clamp(_camRotation, -maxAngle, minAngle);
+
+    transform.localRotation = Quaternion.Euler(_camRotation, 0f, 0f);
   }
-
-  // private void CamRotate(float inputValue) => transform.localRotation = Quaternion.Euler(CamCropAngle(inputValue), 0f, 0f);
-  private void CamRotate(float inputValue)
-  {
-    transform.Rotate(Vector3.left, inputValue * CamCropAngle(-0.9f, 0.9f));
-  }
-
-  // private float CamCropAngle(float valueToCrop) // Обрезка наклона камеры до максимального и минимального 
-  // {
-  //   _camRotation -= valueToCrop;
-  //   _camRotation = Mathf.Clamp(_camRotation, -_maxAngle, _minAngle);
-  //   return _camRotation;
-  // }
-
-  private int CamCropAngle(float min, float max) // Обрезка наклона камеры до максимального и минимального 
-  {
-    if (transform.rotation.x >= max || transform.rotation.x <= min) return 0;
-    return 1;
-  }
-
 }
