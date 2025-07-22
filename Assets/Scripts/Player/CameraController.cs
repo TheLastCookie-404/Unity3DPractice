@@ -40,6 +40,6 @@ public class CameraController : MonoBehaviour
     _camRotation -= inputValue;
     _camRotation = Mathf.Clamp(_camRotation, -maxAngle, minAngle);
 
-    transform.localRotation = Quaternion.Euler(_camRotation, 0f, 0f);
+    transform.localRotation = Quaternion.Euler(Vector3.right * _camRotation);
   }
 }
