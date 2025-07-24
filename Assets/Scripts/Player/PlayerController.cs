@@ -1,10 +1,12 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
   [Header("Player speed")]
-  [SerializeField] private float _playerMoveSpeed = 5f;
+  [SerializeField] private float _playerDefaultSpeed = 5f;
+  [SerializeField] private float _playerSprintSpeed = 10f;
   [SerializeField] private float _playerRotateSpeed = 30f;
   [SerializeField] private float _playerMass = 5f;
   [SerializeField] private float _jumpHeight = 1.5f;
@@ -13,18 +15,20 @@ public class PlayerController : MonoBehaviour
   private InputAction _moveAction;
   private InputAction _lookAction;
   private InputAction _jumpAction;
+  private InputAction _sprintAction;
   private Vector3 _playerMove;
+  private float _playerMoveSpeed;
   private float _playerRotate;
 
   private void Awake()
   {
-    gameObject.AddComponent<CharacterController>();
-    _characterController = GetComponent<CharacterController>();
+    _characterController = gameObject.GetOrAddComponent<CharacterController>();
 
     _playerInputSystem = new PlayerInputSystem();
     _moveAction = _playerInputSystem.FindAction("Move");
     _lookAction = _playerInputSystem.FindAction("Look");
     _jumpAction = _playerInputSystem.FindAction("Jump");
+    _sprintAction = _playerInputSystem.FindAction("Sprint");
   }
   private void OnEnable()
   {
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
   private void Update()
   {
     ApplyMove();
+    ApplySprint();
     ApplyRotate();
     ApplyGravity();
     ApplyJump();
@@ -46,11 +51,18 @@ public class PlayerController : MonoBehaviour
 
   private void ApplyMove()
   {
+    Debug.Log(_playerMoveSpeed);
+
     _playerMove.x = _moveAction.ReadValue<Vector2>().x * _playerMoveSpeed;
     _playerMove.z = _moveAction.ReadValue<Vector2>().y * _playerMoveSpeed;
 
     _playerMove = transform.TransformDirection(_playerMove); // Transform to local axis
     _characterController.Move(_playerMove * Time.deltaTime);
+  }
+
+  private void ApplySprint()
+  {
+    _playerMoveSpeed = _sprintAction.IsPressed() ? _playerSprintSpeed : _playerDefaultSpeed;
   }
 
   private void ApplyRotate()
