@@ -1,8 +1,7 @@
-using System;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-public class PlayerController : MonoBehaviour
+
+public class Player : MonoBehaviour
 {
   [Header("Player speed")]
   [SerializeField] private float _playerDefaultSpeed = 5f;
@@ -10,25 +9,23 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private float _playerRotateSpeed = 30f;
   [SerializeField] private float _playerMass = 5f;
   [SerializeField] private float _jumpHeight = 1.5f;
+
   private CharacterController _characterController;
   private PlayerInputSystem _playerInputSystem;
-  private InputAction _moveAction;
-  private InputAction _lookAction;
-  private InputAction _jumpAction;
-  private InputAction _sprintAction;
+  private Vector2 _moveInput;
+  private Vector2 _lookInput;
+  private bool _sprintInput;
+  private bool _jumpInput;
   private Vector3 _playerMove;
   private float _playerMoveSpeed;
   private float _playerRotate;
 
+  private const float AccelerationSpeed = 1.2f;
+
   private void Awake()
   {
     _characterController = gameObject.GetOrAddComponent<CharacterController>();
-
     _playerInputSystem = new PlayerInputSystem();
-    _moveAction = _playerInputSystem.FindAction("Move");
-    _lookAction = _playerInputSystem.FindAction("Look");
-    _jumpAction = _playerInputSystem.FindAction("Jump");
-    _sprintAction = _playerInputSystem.FindAction("Sprint");
   }
   private void OnEnable()
   {
@@ -42,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
   private void Update()
   {
+    GetInpup();
     ApplyMove();
     ApplySprint();
     ApplyRotate();
@@ -49,12 +47,18 @@ public class PlayerController : MonoBehaviour
     ApplyJump();
   }
 
+  private void GetInpup()
+  {
+    _moveInput = _playerInputSystem.Player.Move.ReadValue<Vector2>();
+    _lookInput = _playerInputSystem.Player.Look.ReadValue<Vector2>();
+    _jumpInput = _playerInputSystem.Player.Jump.WasPressedThisFrame();
+    _sprintInput = _playerInputSystem.Player.Sprint.IsPressed();
+  }
+
   private void ApplyMove()
   {
-    Debug.Log(_playerMoveSpeed);
-
-    _playerMove.x = _moveAction.ReadValue<Vector2>().x * _playerMoveSpeed;
-    _playerMove.z = _moveAction.ReadValue<Vector2>().y * _playerMoveSpeed;
+    _playerMove.x = _moveInput.x * _playerMoveSpeed;
+    _playerMove.z = _moveInput.y * _playerMoveSpeed;
 
     _playerMove = transform.TransformDirection(_playerMove); // Transform to local axis
     _characterController.Move(_playerMove * Time.deltaTime);
@@ -62,12 +66,12 @@ public class PlayerController : MonoBehaviour
 
   private void ApplySprint()
   {
-    _playerMoveSpeed = _sprintAction.IsPressed() ? _playerSprintSpeed : _playerDefaultSpeed;
+    _playerMoveSpeed = _sprintInput ? _playerSprintSpeed : _playerDefaultSpeed;
   }
 
   private void ApplyRotate()
   {
-    _playerRotate = _lookAction.ReadValue<Vector2>().x;
+    _playerRotate = _lookInput.x;
     transform.Rotate(Vector3.up, _playerRotateSpeed * Time.deltaTime * _playerRotate);
   }
 
@@ -86,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
   private void ApplyJump()
   {
-    if (_jumpAction.WasPressedThisFrame() && _characterController.isGrounded)
+    if (_jumpInput && _characterController.isGrounded)
     {
       // This is formula for jump to a specific height (* -2f) is part of formula
       _playerMove.y = Mathf.Sqrt(_jumpHeight * -2f * (Physics.gravity.y * _playerMass));
