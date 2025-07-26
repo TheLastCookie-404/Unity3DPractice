@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
   [SerializeField] private float _playerSprintSpeed = 10f;
   [SerializeField] private float _playerRotateSpeed = 30f;
   [SerializeField] private float _playerMass = 5f;
-  [SerializeField] private float _jumpHeight = 1.5f;
+  [SerializeField] private float _playerJumpHeight = 1.5f;
+  [SerializeField] private float _accelerationSpeed = 1.2f;
 
   private CharacterController _characterController;
   private PlayerInputSystem _playerInputSystem;
@@ -17,10 +18,9 @@ public class Player : MonoBehaviour
   private bool _sprintInput;
   private bool _jumpInput;
   private Vector3 _playerMove;
+  private float _moveX;
+  private float _moveZ;
   private float _playerMoveSpeed;
-  private float _playerRotate;
-
-  private const float AccelerationSpeed = 1.2f;
 
   private void Awake()
   {
@@ -49,16 +49,18 @@ public class Player : MonoBehaviour
 
   private void GetInpup()
   {
-    _moveInput = _playerInputSystem.Player.Move.ReadValue<Vector2>();
-    _lookInput = _playerInputSystem.Player.Look.ReadValue<Vector2>();
+    _moveInput = _playerInputSystem.Player.Move.ReadValue<Vector2>() * _playerMoveSpeed;
+    _lookInput = _playerInputSystem.Player.Look.ReadValue<Vector2>() * _playerRotateSpeed;
     _jumpInput = _playerInputSystem.Player.Jump.WasPressedThisFrame();
     _sprintInput = _playerInputSystem.Player.Sprint.IsPressed();
   }
 
   private void ApplyMove()
   {
-    _playerMove.x = _moveInput.x * _playerMoveSpeed;
-    _playerMove.z = _moveInput.y * _playerMoveSpeed;
+    _moveX = Mathf.Lerp(_moveX, _moveInput.x, _accelerationSpeed * Time.deltaTime);
+    _moveZ = Mathf.Lerp(_moveZ, _moveInput.y, _accelerationSpeed * Time.deltaTime);
+    _playerMove.x = _moveX;
+    _playerMove.z = _moveZ;
 
     _playerMove = transform.TransformDirection(_playerMove); // Transform to local axis
     _characterController.Move(_playerMove * Time.deltaTime);
@@ -71,8 +73,7 @@ public class Player : MonoBehaviour
 
   private void ApplyRotate()
   {
-    _playerRotate = _lookInput.x;
-    transform.Rotate(Vector3.up, _playerRotateSpeed * Time.deltaTime * _playerRotate);
+    transform.Rotate(Vector3.up, Time.deltaTime * _lookInput.x);
   }
 
   private void ApplyGravity()
@@ -93,7 +94,7 @@ public class Player : MonoBehaviour
     if (_jumpInput && _characterController.isGrounded)
     {
       // This is formula for jump to a specific height (* -2f) is part of formula
-      _playerMove.y = Mathf.Sqrt(_jumpHeight * -2f * (Physics.gravity.y * _playerMass));
+      _playerMove.y = Mathf.Sqrt(_playerJumpHeight * -2f * (Physics.gravity.y * _playerMass));
     }
   }
 }
