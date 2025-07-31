@@ -357,9 +357,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8929967512205622602}
   - component: {fileID: 6460673946592945447}
+  - component: {fileID: 6430166626189676104}
   - component: {fileID: 8917323022710776084}
   - component: {fileID: 1352567575352063081}
-  - component: {fileID: 6430166626189676104}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -410,36 +410,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8917323022710776084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6558879848036822207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1e3f4b68dff9eb46b11664cba7cf03b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerDefaultSpeed: 5
-  _playerSprintSpeed: 10
-  _playerRotateSpeed: 30
-  _playerMass: 5
-  _playerJumpHeight: 1.5
-  _moveInterpolatoinFactor: 1.2
---- !u!114 &1352567575352063081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6558879848036822207}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c072e5c4fc780f4b8d4a1143a4b8dce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6430166626189676104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,3 +440,33 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &8917323022710776084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6558879848036822207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1e3f4b68dff9eb46b11664cba7cf03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultSpeed: 5
+  _sprintSpeed: 10
+  _rotateSpeed: 30
+  _mass: 5
+  _jumpHeight: 1.5
+  _moveInterpolatoinFactor: 1.2
+--- !u!114 &1352567575352063081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6558879848036822207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c072e5c4fc780f4b8d4a1143a4b8dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
