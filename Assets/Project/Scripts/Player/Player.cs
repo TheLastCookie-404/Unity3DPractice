@@ -9,17 +9,17 @@ public class Player : MonoBehaviour
   [SerializeField] private float _playerRotateSpeed = 30f;
   [SerializeField] private float _playerMass = 5f;
   [SerializeField] private float _playerJumpHeight = 1.5f;
-  [SerializeField] private float _accelerationSpeed = 1.2f;
+  [SerializeField] private float _moveInterpolatoinFactor = 10f;
 
   private CharacterController _characterController;
   private PlayerInputSystem _playerInputSystem;
+
   private Vector2 _moveInput;
   private Vector2 _lookInput;
   private bool _sprintInput;
   private bool _jumpInput;
+
   private Vector3 _playerMove;
-  private float _moveX;
-  private float _moveZ;
   private float _playerMoveSpeed;
 
   private void Awake()
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     _characterController = gameObject.GetOrAddComponent<CharacterController>();
     _playerInputSystem = new PlayerInputSystem();
   }
+
   private void OnEnable()
   {
     _playerInputSystem.Enable();
@@ -39,44 +40,23 @@ public class Player : MonoBehaviour
 
   private void Update()
   {
+    ApplyControllerMove(_playerMove);
+    Gravity();
     GetInpup();
-    ApplyMove();
-    ApplySprint();
-    ApplyRotate();
-    ApplyGravity();
-    ApplyJump();
+
+    Move(_moveInput);
+    Jump(_jumpInput);
+    Sprint(_sprintInput);
+    Rotate(_lookInput.x);
   }
 
-  private void GetInpup()
+  private void ApplyControllerMove(Vector3 motion)
   {
-    _moveInput = _playerInputSystem.Player.Move.ReadValue<Vector2>() * _playerMoveSpeed;
-    _lookInput = _playerInputSystem.Player.Look.ReadValue<Vector2>() * _playerRotateSpeed;
-    _jumpInput = _playerInputSystem.Player.Jump.WasPressedThisFrame();
-    _sprintInput = _playerInputSystem.Player.Sprint.IsPressed();
+    motion = transform.TransformDirection(motion); // Transform to local axis
+    _characterController.Move(motion * Time.deltaTime);
   }
 
-  private void ApplyMove()
-  {
-    _moveX = Mathf.Lerp(_moveX, _moveInput.x, _accelerationSpeed * Time.deltaTime);
-    _moveZ = Mathf.Lerp(_moveZ, _moveInput.y, _accelerationSpeed * Time.deltaTime);
-    _playerMove.x = _moveX;
-    _playerMove.z = _moveZ;
-
-    _playerMove = transform.TransformDirection(_playerMove); // Transform to local axis
-    _characterController.Move(_playerMove * Time.deltaTime);
-  }
-
-  private void ApplySprint()
-  {
-    _playerMoveSpeed = _sprintInput ? _playerSprintSpeed : _playerDefaultSpeed;
-  }
-
-  private void ApplyRotate()
-  {
-    transform.Rotate(Vector3.up, Time.deltaTime * _lookInput.x);
-  }
-
-  private void ApplyGravity()
+  public void Gravity()
   {
     if (!_characterController.isGrounded)
     {
@@ -89,9 +69,33 @@ public class Player : MonoBehaviour
       _playerMove.y = -0.5f;
   }
 
-  private void ApplyJump()
+  private void GetInpup()
   {
-    if (_jumpInput && _characterController.isGrounded)
+    _moveInput = _playerInputSystem.Player.Move.ReadValue<Vector2>() * _playerMoveSpeed;
+    _lookInput = _playerInputSystem.Player.Look.ReadValue<Vector2>() * _playerRotateSpeed;
+    _jumpInput = _playerInputSystem.Player.Jump.WasPressedThisFrame();
+    _sprintInput = _playerInputSystem.Player.Sprint.IsPressed();
+  }
+
+  private void Move(Vector2 motionInput)
+  {
+    _playerMove.x = Mathf.Lerp(_playerMove.x, motionInput.x, _moveInterpolatoinFactor * Time.deltaTime);
+    _playerMove.z = Mathf.Lerp(_playerMove.z, motionInput.y, _moveInterpolatoinFactor * Time.deltaTime);
+  }
+
+  private void Sprint(bool sprintInput)
+  {
+    _playerMoveSpeed = sprintInput ? _playerSprintSpeed : _playerDefaultSpeed;
+  }
+
+  private void Rotate(float rotateInput)
+  {
+    transform.Rotate(Vector3.up, Time.deltaTime * rotateInput);
+  }
+
+  private void Jump(bool jumpInput)
+  {
+    if (jumpInput && _characterController.isGrounded)
     {
       // This is formula for jump to a specific height (* -2f) is part of formula
       _playerMove.y = Mathf.Sqrt(_playerJumpHeight * -2f * (Physics.gravity.y * _playerMass));
