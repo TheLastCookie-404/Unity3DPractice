@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
   private Player _player;
@@ -13,8 +14,6 @@ public class PlayerController : MonoBehaviour
 
   private void Awake()
   {
-    gameObject.AddComponent<PlayerInput>();
-
     _player = gameObject.GetOrAddComponent<Player>();
     _playerInputSystem = new PlayerInputSystem();
   }
