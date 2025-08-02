@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
   private Player _player;
+  private PlayerCam _playerCam;
   private PlayerInputSystem _playerInputSystem;
   private Vector2 _moveInput;
   private Vector2 _lookInput;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
   private void Awake()
   {
     _player = gameObject.GetOrAddComponent<Player>();
+    _playerCam = FindAnyObjectByType<PlayerCam>();
     _playerInputSystem = new PlayerInputSystem();
   }
 
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     _player.Jump(_jumpInput);
     _player.Sprint(_sprintInput);
     _player.Rotate(_lookInput.x);
+    _playerCam.Rotate(_lookInput.y);
   }
 
   private void OnEnable()

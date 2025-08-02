@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController : MonoBehaviour
+public class PlayerCam : MonoBehaviour
 {
   [Header("Обрезка угла наклона камеры")]
   [SerializeField, Tooltip("Максимальный угол поворота камеры"), Range(70, 90)] private float _maxAngle;
@@ -31,14 +31,14 @@ public class CameraController : MonoBehaviour
 
   private void Update()
   {
-    _rotateInput = _lookAction.ReadValue<Vector2>() * _camRotationSpeed * Time.deltaTime;
-    CamRotate(_rotateInput.y, _maxAngle, _minAngle);
+    _rotateInput = _lookAction.ReadValue<Vector2>();
+    // CamRotate(_rotateInput.y, _maxAngle, _minAngle);
   }
 
-  private void CamRotate(float inputValue, float maxAngle, float minAngle)
+  public void Rotate(float inputValue)
   {
-    _camRotation -= inputValue;
-    _camRotation = Mathf.Clamp(_camRotation, -maxAngle, minAngle);
+    _camRotation -= inputValue * _camRotationSpeed * Time.deltaTime;
+    _camRotation = Mathf.Clamp(_camRotation, -_maxAngle, _minAngle);
 
     transform.localRotation = Quaternion.Euler(Vector3.right * _camRotation);
   }
