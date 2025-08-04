@@ -1,16 +1,34 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerAnimations : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+  private PlayerInputSystem _playerInputSystem;
+  private Animator _animatior;
+  private int _moveStateHash;
 
-    // Update is called once per frame
-    void Update()
+  private void Awake()
+  {
+    _animatior = gameObject.GetComponent<Animator>();
+    _playerInputSystem = new PlayerInputSystem();
+    _moveStateHash = Animator.StringToHash("Base Layer.Walk");
+  }
+
+  private void Update()
+  {
+    if (_playerInputSystem.Player.Move.IsPressed())
     {
-        
+      // _animatior.Play(_moveStateHash);
     }
+  }
+
+  void OnEnable()
+  {
+    _playerInputSystem.Enable();
+  }
+
+  void OnDisable()
+  {
+    _playerInputSystem.Disable();
+  }
 }
