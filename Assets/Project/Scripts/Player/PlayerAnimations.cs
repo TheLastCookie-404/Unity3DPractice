@@ -11,15 +11,16 @@ public class PlayerAnimations : MonoBehaviour
   {
     _animatior = gameObject.GetComponent<Animator>();
     _playerInputSystem = new PlayerInputSystem();
-    _moveStateHash = Animator.StringToHash("Base Layer.Walk");
+    // _moveStateHash = Animator.StringToHash("Walk");
   }
 
-  private void Update()
+  private void LateUpdate()
   {
     if (_playerInputSystem.Player.Move.IsPressed())
     {
-      // _animatior.Play(_moveStateHash);
+      _animatior.SetBool("Walk", true);
     }
+    else _animatior.SetBool("Walk", false);
   }
 
   void OnEnable()
