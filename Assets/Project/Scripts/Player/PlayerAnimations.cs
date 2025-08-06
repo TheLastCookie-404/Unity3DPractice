@@ -18,6 +18,7 @@ public class PlayerAnimations : MonoBehaviour
   {
     MoveAnimation();
     JumpAnimation();
+    RunAnimation();
   }
 
   private void OnEnable()
@@ -51,6 +52,18 @@ public class PlayerAnimations : MonoBehaviour
     else if (_playerInputSystem.Player.Jump.WasReleasedThisFrame())
     {
       _animator.SetBool("Jump", false);
+    }
+  }
+
+  private void RunAnimation()
+  {
+    if (_playerInputSystem.Player.Sprint.WasPressedThisFrame())
+    {
+      _animator.SetBool("Run", true);
+    }
+    else if (_playerInputSystem.Player.Sprint.WasReleasedThisFrame())
+    {
+      _animator.SetBool("Run", false);
     }
   }
 }
