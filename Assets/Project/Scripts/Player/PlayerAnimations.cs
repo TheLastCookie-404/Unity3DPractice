@@ -4,32 +4,53 @@ using UnityEngine;
 public class PlayerAnimations : MonoBehaviour
 {
   private PlayerInputSystem _playerInputSystem;
-  private Animator _animatior;
+  private Animator _animator;
   private int _moveStateHash;
 
   private void Awake()
   {
-    _animatior = gameObject.GetComponent<Animator>();
+    _animator = gameObject.GetComponent<Animator>();
     _playerInputSystem = new PlayerInputSystem();
     // _moveStateHash = Animator.StringToHash("Walk");
   }
 
-  private void LateUpdate()
+  private void Update()
   {
-    if (_playerInputSystem.Player.Move.IsPressed())
-    {
-      _animatior.SetBool("Walk", true);
-    }
-    else _animatior.SetBool("Walk", false);
+    MoveAnimation();
+    JumpAnimation();
   }
 
-  void OnEnable()
+  private void OnEnable()
   {
     _playerInputSystem.Enable();
   }
 
-  void OnDisable()
+  private void OnDisable()
   {
     _playerInputSystem.Disable();
+  }
+
+  private void MoveAnimation()
+  {
+    if (_playerInputSystem.Player.Move.WasPressedThisFrame())
+    {
+      _animator.SetBool("Walk", true);
+    }
+    else if (_playerInputSystem.Player.Move.WasReleasedThisFrame())
+    {
+      _animator.SetBool("Walk", false);
+    }
+  }
+
+  private void JumpAnimation()
+  {
+    if (_playerInputSystem.Player.Jump.WasPressedThisFrame())
+    {
+      _animator.SetBool("Jump", true);
+    }
+    else if (_playerInputSystem.Player.Jump.WasReleasedThisFrame())
+    {
+      _animator.SetBool("Jump", false);
+    }
   }
 }
