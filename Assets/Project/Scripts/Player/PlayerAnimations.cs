@@ -49,7 +49,7 @@ public class PlayerAnimations : MonoBehaviour
     {
       _animator.SetBool("Jump", true);
     }
-    else if (_playerInputSystem.Player.Jump.WasReleasedThisFrame())
+    else // if (_playerInputSystem.Player.Jump.WasReleasedThisFrame())
     {
       _animator.SetBool("Jump", false);
     }

@@ -67,24 +67,24 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 5892738868076635276}
-    m_Position: {x: 340, y: 80, z: 0}
+    m_Position: {x: 350, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 655171267976916231}
-    m_Position: {x: 200, y: 170, z: 0}
+    m_Position: {x: 200, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2640703416607803419}
-    m_Position: {x: 500, y: 170, z: 0}
+    m_Position: {x: 500, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5092981066383594697}
-    m_Position: {x: 200, y: 250, z: 0}
+    m_Position: {x: 200, y: 260, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 170, y: 30, z: 0}
-  m_EntryPosition: {x: 360, y: -10, z: 0}
-  m_ExitPosition: {x: 550, y: 30, z: 0}
+  m_AnyStatePosition: {x: 120, y: 0, z: 0}
+  m_EntryPosition: {x: 370, y: 0, z: 0}
+  m_ExitPosition: {x: 620, y: 0, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 5892738868076635276}
 --- !u!1101 &-6363766962680985039
@@ -378,6 +378,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: Run
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: WalkBack
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
