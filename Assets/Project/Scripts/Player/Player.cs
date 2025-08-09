@@ -10,9 +10,12 @@ public class Player : MonoBehaviour
   [SerializeField] private float _mass = 5f;
   [SerializeField] private float _jumpHeight = 1.5f;
   [SerializeField] private float _moveInterpolatoinFactor = 10f;
+  [SerializeField] private PhysicsMaterial _physicsMaterial;
 
   private CharacterController _characterController;
   private Vector3 _move;
+  // private RaycastHit _hitInfo;
+  // private float _rayMaxDistance = 5;
   private float _moveSpeed;
 
   private void Awake()
@@ -24,6 +27,8 @@ public class Player : MonoBehaviour
   {
     ApplyControllerMove(_move);
     Gravity();
+    // Physics.Raycast(transform.position + Vector3.up, Vector3.down, out _hitInfo, _rayMaxDistance);
+    // Debug.Log(_hitInfo.normal);
   }
 
   private void ApplyControllerMove(Vector3 motion)
