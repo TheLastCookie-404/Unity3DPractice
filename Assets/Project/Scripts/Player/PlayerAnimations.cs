@@ -19,8 +19,8 @@ public class PlayerAnimations : MonoBehaviour
   {
     GetInputs();
     MoveAnimation(_isMovePressed);
-    JumpAnimation(_isRunPresed);
-    RunAnimation(_isJumpPressed);
+    RunAnimation(_isRunPresed);
+    JumpAnimation(_isJumpPressed);
   }
 
   private void OnEnable()
