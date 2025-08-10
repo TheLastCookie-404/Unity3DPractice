@@ -5,20 +5,22 @@ public class PlayerAnimations : MonoBehaviour
 {
   private PlayerInputSystem _playerInputSystem;
   private Animator _animator;
-  private int _moveStateHash;
+  private bool _isMovePressed;
+  private bool _isRunPresed;
+  private bool _isJumpPressed;
 
   private void Awake()
   {
     _animator = gameObject.GetComponent<Animator>();
     _playerInputSystem = new PlayerInputSystem();
-    // _moveStateHash = Animator.StringToHash("Walk");
   }
 
   private void Update()
   {
-    MoveAnimation();
-    JumpAnimation();
-    RunAnimation();
+    GetInputs();
+    MoveAnimation(_isMovePressed);
+    JumpAnimation(_isRunPresed);
+    RunAnimation(_isJumpPressed);
   }
 
   private void OnEnable()
@@ -31,39 +33,15 @@ public class PlayerAnimations : MonoBehaviour
     _playerInputSystem.Disable();
   }
 
-  private void MoveAnimation()
+  private void GetInputs()
   {
-    if (_playerInputSystem.Player.Move.WasPressedThisFrame())
-    {
-      _animator.SetBool("Walk", true);
-    }
-    else if (_playerInputSystem.Player.Move.WasReleasedThisFrame())
-    {
-      _animator.SetBool("Walk", false);
-    }
+    _isMovePressed = _playerInputSystem.Player.Move.IsPressed();
+    _isRunPresed = _playerInputSystem.Player.Sprint.IsPressed();
+    _isJumpPressed = _playerInputSystem.Player.Jump.WasPressedThisFrame();
   }
 
-  private void JumpAnimation()
-  {
-    if (_playerInputSystem.Player.Jump.WasPressedThisFrame())
-    {
-      _animator.SetBool("Jump", true);
-    }
-    else // if (_playerInputSystem.Player.Jump.WasReleasedThisFrame())
-    {
-      _animator.SetBool("Jump", false);
-    }
-  }
+  private void MoveAnimation(bool input) => _animator.SetBool("Walk", input);
+  private void RunAnimation(bool input) => _animator.SetBool("Run", input);
+  private void JumpAnimation(bool input) => _animator.SetBool("Jump", input);
 
-  private void RunAnimation()
-  {
-    if (_playerInputSystem.Player.Sprint.WasPressedThisFrame())
-    {
-      _animator.SetBool("Run", true);
-    }
-    else if (_playerInputSystem.Player.Sprint.WasReleasedThisFrame())
-    {
-      _animator.SetBool("Run", false);
-    }
-  }
 }
