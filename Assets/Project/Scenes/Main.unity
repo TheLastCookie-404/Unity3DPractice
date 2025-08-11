@@ -1909,6 +1909,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Mita
       objectReference: {fileID: 0}
+    - target: {fileID: 3768427912152349652, guid: d00e477b793c1484084b955fc113a727, type: 3}
+      propertyPath: _fallOffPoint
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3768427912152349652, guid: d00e477b793c1484084b955fc113a727, type: 3}
+      propertyPath: _defaultPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3979299754952116115, guid: d00e477b793c1484084b955fc113a727, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1948,6 +1956,10 @@ PrefabInstance:
     - target: {fileID: 3979299754952116115, guid: d00e477b793c1484084b955fc113a727, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6757861914286300558, guid: d00e477b793c1484084b955fc113a727, type: 3}
+      propertyPath: _view
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8878065423783787869}
   - component: {fileID: 3125973107364316788}
   - component: {fileID: 8319183949140624159}
-  - component: {fileID: 3139276327562210383}
+  - component: {fileID: 3768427912152349652}
   - component: {fileID: 1896869863837323577}
   - component: {fileID: 9155635491580740418}
   m_Layer: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   _mass: 5
   _jumpHeight: 1.5
   _moveInterpolatoinFactor: 10
---- !u!114 &3139276327562210383
+--- !u!114 &3768427912152349652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,8 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc0421353121dd43a62292c8142ae22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultPosition: {x: 0, y: 1, z: 10}
-  _fallOffPoint: -20
+  _defaultPosition: {x: 0, y: 0, z: 0}
+  _fallOffPoint: 0
 --- !u!114 &1896869863837323577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +246,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 477507743906942875}
-  - component: {fileID: 1741808317629507448}
   - component: {fileID: 3608488540451766907}
   - component: {fileID: 345748027189046137}
   m_Layer: 0
@@ -271,14 +270,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1358776491264500239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1741808317629507448
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056510055415980592}
-  m_Enabled: 1
 --- !u!20 &3608488540451766907
 Camera:
   m_ObjectHideFlags: 0
@@ -415,6 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1358776491264500239}
+  - component: {fileID: 7410452414370123609}
   - component: {fileID: 6757861914286300558}
   m_Layer: 0
   m_Name: Player Camera
@@ -440,6 +432,14 @@ Transform:
   - {fileID: 477507743906942875}
   m_Father: {fileID: 3979299754952116115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &7410452414370123609
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349034730399339399}
+  m_Enabled: 1
 --- !u!114 &6757861914286300558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,7 +1468,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2843822452103246206}
-  - component: {fileID: 8401075865189977638}
   - component: {fileID: 1071964449970916959}
   - component: {fileID: 2081816810734949464}
   m_Layer: 0
@@ -1493,14 +1492,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1358776491264500239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &8401075865189977638
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8250156631457467748}
-  m_Enabled: 1
 --- !u!20 &1071964449970916959
 Camera:
   m_ObjectHideFlags: 0
