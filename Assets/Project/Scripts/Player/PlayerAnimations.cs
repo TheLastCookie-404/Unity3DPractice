@@ -5,6 +5,7 @@ public class PlayerAnimations : MonoBehaviour
 {
   private PlayerInputSystem _playerInputSystem;
   private Animator _animator;
+
   private bool _isMovePressed;
   private bool _isRunPresed;
   private bool _isJumpPressed;

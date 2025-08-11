@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
   private PlayerInputSystem _playerInputSystem;
   private Vector2 _moveInput;
   private Vector2 _lookInput;
+
   private bool _jumpInput;
   private bool _sprintInput;
 

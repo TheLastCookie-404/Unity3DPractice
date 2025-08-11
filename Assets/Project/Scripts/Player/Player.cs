@@ -1,21 +1,20 @@
+using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
   [Header("Player settings")]
-  [SerializeField] private float _defaultSpeed = 5f;
-  [SerializeField] private float _sprintSpeed = 10f;
-  [SerializeField] private float _rotateSpeed = 30f;
-  [SerializeField] private float _mass = 5f;
-  [SerializeField] private float _jumpHeight = 1.5f;
-  [SerializeField] private float _moveInterpolatoinFactor = 10f;
-  [SerializeField] private PhysicsMaterial _physicsMaterial;
+  [SerializeField, DefaultValue(5f)] private float _defaultSpeed;
+  [SerializeField, DefaultValue(10f)] private float _sprintSpeed;
+  [SerializeField, DefaultValue(20f)] private float _rotateSpeed;
+  [SerializeField, DefaultValue(5f)] private float _mass;
+  [SerializeField, DefaultValue(1.5f)] private float _jumpHeight;
+  [SerializeField, DefaultValue(10f)] private float _moveInterpolatoinFactor;
 
   private CharacterController _characterController;
   private Vector3 _move;
-  // private RaycastHit _hitInfo;
-  // private float _rayMaxDistance = 5;
+
   private float _moveSpeed;
 
   private void Awake()
@@ -27,8 +26,6 @@ public class Player : MonoBehaviour
   {
     ApplyControllerMove(_move);
     Gravity();
-    // Physics.Raycast(transform.position + Vector3.up, Vector3.down, out _hitInfo, _rayMaxDistance);
-    // Debug.Log(_hitInfo.normal);
   }
 
   private void ApplyControllerMove(Vector3 motion)
