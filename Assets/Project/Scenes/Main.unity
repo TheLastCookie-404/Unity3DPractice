@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &259759214 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3979299754952116115, guid: d00e477b793c1484084b955fc113a727, type: 3}
-  m_PrefabInstance: {fileID: 1015160225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &345786005
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,6 +2147,10 @@ PrefabInstance:
       value: Player Mita
       objectReference: {fileID: 0}
     - target: {fileID: 1071964449970916959, guid: d00e477b793c1484084b955fc113a727, type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1071964449970916959, guid: d00e477b793c1484084b955fc113a727, type: 3}
       propertyPath: m_TargetTexture
       value: 
       objectReference: {fileID: 8400000, guid: 2c3b0d94be1e50842a214079d48e1b15, type: 2}
@@ -2229,10 +2228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3979299754952116115, guid: d00e477b793c1484084b955fc113a727, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1056524076}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d00e477b793c1484084b955fc113a727, type: 3}
 --- !u!1 &1056524075
@@ -2267,7 +2263,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2136789669}
-  m_Father: {fileID: 259759214}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4996,6 +4992,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 798296734}
   - {fileID: 1563370960}
+  - {fileID: 1056524076}
   - {fileID: 1015160225}
   - {fileID: 7703920629403666973}
   - {fileID: 4633117781635669320}
