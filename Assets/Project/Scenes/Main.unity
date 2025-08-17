@@ -2391,6 +2391,10 @@ PrefabInstance:
       propertyPath: _view
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8319183949140624159, guid: d00e477b793c1484084b955fc113a727, type: 3}
+      propertyPath: _slopeSlideSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
