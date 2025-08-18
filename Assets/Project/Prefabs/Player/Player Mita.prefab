@@ -135,6 +135,7 @@ MonoBehaviour:
   _mass: 5
   _jumpHeight: 1.5
   _moveInterpolatoinFactor: 10
+  _slopeSlideSpeed: 0
 --- !u!114 &3768427912152349652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +564,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1183242313976669962}
-  - component: {fileID: 352820207494774008}
   m_Layer: 0
   m_Name: MitaWithRig
   m_TagString: Untagged
@@ -588,28 +588,6 @@ Transform:
   - {fileID: 3614563448366354518}
   m_Father: {fileID: 3979299754952116115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &352820207494774008
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959631834979396098}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 171dc2bf0be00234baa400e821438f61, type: 3}
-  m_Controller: {fileID: 9100000, guid: 209f767ace49c254993dda402a5c1450, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2326861877338434628
 GameObject:
   m_ObjectHideFlags: 0

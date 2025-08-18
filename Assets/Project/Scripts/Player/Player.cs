@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
   private float GetGroundedAngle(out RaycastHit raycastHit)
   {
-    Debug.DrawRay(transform.position, Vector3.down, Color.red, 5);
+    // Debug.DrawRay(transform.position, Vector3.down, Color.red, 5);
     Physics.Raycast(transform.position, Vector3.down, out raycastHit, 5);
     return Vector3.Angle(raycastHit.normal, Vector3.up);
   }
