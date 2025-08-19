@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
   public void Jump(bool jumpInput)
   {
-    if (jumpInput && _characterController.isGrounded)
+    if (jumpInput && _characterController.isGrounded && _groundedAngle < _characterController.slopeLimit)
     {
       // This is formula for jump to a specific height "-2f" is part of formula
       // for jumping to a specific height
