@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
   [SerializeField, DefaultValue(5f)] private float _defaultSpeed;
   [SerializeField, DefaultValue(10f)] private float _sprintSpeed;
   [SerializeField, DefaultValue(20f)] private float _rotateSpeed;
-  [SerializeField, DefaultValue(5f)] private float _mass;
+  [SerializeField, DefaultValue(5f)] private float _fallSpeed;
   [SerializeField, DefaultValue(1.5f)] private float _jumpHeight;
   [SerializeField, DefaultValue(10f)] private float _moveInterpolatoinFactor;
   [SerializeField, DefaultValue(10f)] private float _slopeSlideSpeed;
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
   private RaycastHit _raycastHit;
 
   private float _moveSpeed;
+  private float _groundedAngle;
 
   private void Awake()
   {
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour
 
   private void Update()
   {
+    _groundedAngle = GetGroundAngle(out _raycastHit);
+    Debug.Log(_groundedAngle);
+
     ApplyControllerMove(_move);
     Gravity();
     SlopeSlide();
@@ -42,7 +46,7 @@ public class Player : MonoBehaviour
     if (!_characterController.isGrounded)
     {
       // Multyplied by Time.deltaTime twice, for downwards acceleration (gravity * mass * time^2)
-      _move.y += Physics.gravity.y * _mass * Time.deltaTime;
+      _move.y += Physics.gravity.y * _fallSpeed * Time.deltaTime;
     }
     else
       // -0.5f is for reducing fluctuations when character is on the ground
@@ -50,21 +54,18 @@ public class Player : MonoBehaviour
       _move.y = -0.5f;
   }
 
-  private float GetGroundedAngle(out RaycastHit raycastHit)
+  private float GetGroundAngle(out RaycastHit raycastHit)
   {
-    // Debug.DrawRay(transform.position, Vector3.down, Color.red, 5);
-    Physics.Raycast(transform.position, Vector3.down, out raycastHit, 5);
+    Physics.SphereCast(transform.position, 0.3f, Vector3.down, out raycastHit, 5f);
     return Vector3.Angle(raycastHit.normal, Vector3.up);
   }
 
   private void SlopeSlide()
   {
-    float groundedAngle = GetGroundedAngle(out _raycastHit);
-
     // InverseTransformDirection to make slide correct directions
     _raycastHit.normal = transform.InverseTransformDirection(_raycastHit.normal);
 
-    if (groundedAngle >= _characterController.slopeLimit && _characterController.isGrounded)
+    if (_groundedAngle >= _characterController.slopeLimit && _characterController.isGrounded)
     {
       _move = Vector3.ProjectOnPlane(Vector3.up * (_move.y * _slopeSlideSpeed), _raycastHit.normal);
     }
@@ -90,8 +91,9 @@ public class Player : MonoBehaviour
   {
     if (jumpInput && _characterController.isGrounded)
     {
-      // This is formula for jump to a specific height (* -2f) is part of formula
-      _move.y = Mathf.Sqrt(_jumpHeight * -2f * (Physics.gravity.y * _mass));
+      // This is formula for jump to a specific height "-2f" is part of formula
+      // for jumping to a specific height
+      _move.y = Mathf.Sqrt(_jumpHeight * -2f * (Physics.gravity.y * _fallSpeed));
     }
   }
 }
