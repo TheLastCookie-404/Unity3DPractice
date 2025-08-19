@@ -34,15 +34,15 @@ Material:
     - _CloudScatter: 0.092
     - _HorizonBlend: 30
     - _NadirBlend: 1
-    - _StarHeight: 210
+    - _StarHeight: 302.63
     - _StarPower: 38
     - _ZenithBlend: 1
     m_Colors:
-    - _CloudColor: {r: 1, g: 1, b: 1, a: 0}
-    - _GroundColor: {r: 0.16037735, g: 0.04009435, b: 0.04009435, a: 0}
+    - _CloudColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 0}
+    - _GroundColor: {r: 0.0627451, g: 0.0627451, b: 0.1137255, a: 0}
     - _HorizonColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
     - _PanSpeed: {r: 0.01, g: 0.01, b: 0, a: 0}
-    - _SkyColor: {r: 0.01689296, g: 0.0036044791, b: 0.254717, a: 0}
+    - _SkyColor: {r: 0.062477734, g: 0.062477734, b: 0.11320752, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &8642986961653720330

@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
   private void Update()
   {
     _groundedAngle = GetGroundAngle(out _raycastHit);
-    Debug.Log(_groundedAngle);
 
     ApplyControllerMove(_move);
     Gravity();
