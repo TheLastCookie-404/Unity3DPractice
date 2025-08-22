@@ -58,13 +58,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.6
-  m_Radius: 0.4
+  m_Height: 1.5
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: -0.05, z: 0}
+  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!114 &8878065423783787869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,10 +132,10 @@ MonoBehaviour:
   _defaultSpeed: 5
   _sprintSpeed: 10
   _rotateSpeed: 20
-  _mass: 5
+  _fallSpeed: 5
   _jumpHeight: 1.5
   _moveInterpolatoinFactor: 10
-  _slopeSlideSpeed: 0
+  _slopeSlideSpeed: 20
 --- !u!114 &3768427912152349652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc0421353121dd43a62292c8142ae22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultPosition: {x: 0, y: 0, z: 0}
-  _fallOffPoint: 0
+  _defaultPosition: {x: 60, y: 1, z: 112}
+  _fallOffPoint: -20
 --- !u!114 &1896869863837323577
 MonoBehaviour:
   m_ObjectHideFlags: 0
